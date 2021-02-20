@@ -18,7 +18,7 @@ if ! IsInstalled $docker_package; then
     apt-get update
     apt-get install -y apt-transport-https ca-certificates curl software-properties-common
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-    curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/microsoft-prod.list
+    curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/microsoft-prod.list
     apt-get update
     apt-get install -y moby-engine moby-cli
 else
