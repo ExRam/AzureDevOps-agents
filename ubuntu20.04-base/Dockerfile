@@ -30,7 +30,6 @@ RUN /scripts/base/preparemetadata.sh && \
     /scripts/installers/7-zip.sh && \
     /scripts/installers/azcopy.sh && \
     /scripts/installers/gcc.sh && \
-    /scripts/installers/clang.sh && \
     /scripts/installers/cmake.sh && \
     /scripts/installers/build-essential.sh && \
     /scripts/installers/azure-cli.sh && \
