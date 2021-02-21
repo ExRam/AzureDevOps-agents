@@ -13,7 +13,7 @@ source $HELPER_SCRIPTS/apt.sh
 # https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux
 mkdir kubectl && cd kubectl
 
-curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 
 chmod +x ./kubectl
 
@@ -24,9 +24,9 @@ cd ../
 ## Install helm
 mkdir helm && cd helm
 
-wget https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz
+wget https://get.helm.sh/helm-v3.5.2-linux-amd64.tar.gz
 
-tar -zxvf helm-v2.14.3-linux-amd64.tar.gz
+tar -zxvf helm-v3.5.2-linux-amd64.tar.gz
 
 mv linux-amd64/helm /usr/local/bin/helm
 
@@ -43,9 +43,6 @@ if ! command -v helm; then
     echo "helm was not installed"
     exit 1
 fi
-
-echo "Initializing helm"
-helm init --client-only
 
 # Document what was added to the image
 echo "Lastly, documenting what we added to the metadata file"
