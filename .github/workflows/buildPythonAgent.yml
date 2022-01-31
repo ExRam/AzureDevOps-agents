@@ -1,0 +1,10 @@
+name: Build DevOps Python Agent Image.
+
+on: workflow_dispatch
+
+jobs:
+  buildAgent:
+    uses: ./.github/workflows/buildAgent.yml
+    with:
+      suffix: python
+      workingDirectory: ./ubuntu20.04-python

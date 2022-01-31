@@ -1,0 +1,10 @@
+name: Build DevOps .NET Agent Image.
+
+on: workflow_dispatch
+
+jobs:
+  buildAgent:
+    uses: ./.github/workflows/buildAgent.yml
+    with:
+      suffix: dotnet
+      workingDirectory: ./ubuntu20.04-dotnet

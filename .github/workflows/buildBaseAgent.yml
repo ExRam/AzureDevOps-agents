@@ -1,0 +1,10 @@
+name: Build DevOps Base Agent Image.
+
+on: workflow_dispatch
+
+jobs:
+  buildBaseAgent:
+    uses: ./.github/workflows/buildAgent.yml
+    with:
+      suffix: base
+      workingDirectory: ./ubuntu20.04-base

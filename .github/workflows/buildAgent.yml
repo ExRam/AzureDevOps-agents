@@ -1,0 +1,70 @@
+name: Build and push DevOps agent.
+
+on:
+  workflow_call:
+    inputs:
+      base:
+        required: false
+        type: string
+        default: 'base'
+      suffix:
+        required: true
+        type: string
+      workingDirectory:
+        required: true
+        type: string
+
+env:
+  BASE_IMAGE_NAME: devops-agent-ubuntu-20.04
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        
+    - name: Determine semantic version
+      uses: dotnet/nbgv@master
+      id: nbgv
+      with:
+        path: ${{ inputs.workingDirectory }}
+
+    - name: Make all .sh files executable
+      run: find . -type f -iname "*.sh" -exec chmod +x {} \;
+
+    - id: repoOwnerCasing
+      uses: ASzc/change-string-case-action@v1
+      with:
+        string: ${{ github.repository_owner }}
+        
+    - name: Set versions
+      run: echo "tagBase=ghcr.io/${{ steps.repoOwnerCasing.outputs.lowercase }}/$BASE_IMAGE_NAME-${{ inputs.suffix }}" >> $GITHUB_ENV
+      
+    - name: Replace FROM to use base image
+      run: sed -i "s/FROM $BASE_IMAGE_NAME-base\:.*/FROM ghcr.io\/${{ steps.repoOwnerCasing.outputs.lowercase }}\/$BASE_IMAGE_NAME-${{ inputs.base }}\:${{steps.nbgv.outputs.VersionMajor}}/" Dockerfile
+      working-directory: ${{ inputs.workingDirectory }}
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build And Push Agent Image
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        context: ${{ inputs.workingDirectory }}
+        tags: |
+          ${{ env.tagBase }}:${{steps.nbgv.outputs.VersionMajor}}
+          ${{ env.tagBase }}:${{steps.nbgv.outputs.VersionMajor}}.${{steps.nbgv.outputs.VersionMinor}}
+          ${{ env.tagBase }}:${{steps.nbgv.outputs.VersionMajor}}.${{steps.nbgv.outputs.VersionMinor}}.${{steps.nbgv.outputs.BuildNumber}}
+          ${{ env.tagBase }}:${{steps.nbgv.outputs.VersionMajor}}.${{steps.nbgv.outputs.VersionMinor}}.${{steps.nbgv.outputs.BuildNumber}}${{steps.nbgv.outputs.PrereleaseVersion}}
+          ${{ env.tagBase }}:${{steps.nbgv.outputs.VersionMajor}}.${{steps.nbgv.outputs.VersionMinor}}.${{steps.nbgv.outputs.BuildNumber}}${{steps.nbgv.outputs.PrereleaseVersion}}.${{steps.nbgv.outputs.VersionHeight}}

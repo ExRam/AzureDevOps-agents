@@ -1,0 +1,10 @@
+name: Build DevOps Docker Agent Image.
+
+on: workflow_dispatch
+
+jobs:
+  buildAgent:
+    uses: ./.github/workflows/buildAgent.yml
+    with:
+      suffix: docker
+      workingDirectory: ./ubuntu20.04-docker
