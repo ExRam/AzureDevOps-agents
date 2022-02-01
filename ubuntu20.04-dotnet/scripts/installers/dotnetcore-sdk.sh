@@ -27,10 +27,6 @@ mksamples()
 
 set -e
 
-apt-get install dotnet-sdk-2.1
-apt-get install dotnet-sdk-3.1
-apt-get install dotnet-sdk-5.0
-
 #
 # Uncomment the following lines to get a bigger list, dynamically;
 #
@@ -38,7 +34,7 @@ apt-get install dotnet-sdk-5.0
 # releases=$(curl "${release_url}")
 # sdks=$(echo "${releases}" | grep version-sdk | grep -v preview | grep -v rc | grep -v display | cut -d\" -f4 | sort -u | grep '^2')
 
-sdks=(2.1.100 2.1.4 2.1.503 2.1.801 2.2.100 2.2.105 2.2.401)
+sdks=(6.0) #(2.1.100 2.1.4 2.1.503 2.1.801 2.2.100 2.2.105 2.2.401)
 
 for sdk in $sdks; do
     # Glob matches dotnet-dev-1.x or dotnet-sdk-2.y
@@ -86,5 +82,6 @@ done
 # NuGetFallbackFolder at /usr/share/dotnet/sdk/NuGetFallbackFolder is warmed up by smoke test
 # Additional FTE will just copy to ~/.dotnet/NuGet which provides no benefit on a fungible machine
 echo "DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1" | tee -a /etc/environment
+echo "DOTNET_CLI_TELEMETRY_OPTOUT=1" | tee -a /etc/environment
 echo "PATH=\"/home/vsts/.dotnet/tools:$PATH\"" | tee -a /etc/environment
 
