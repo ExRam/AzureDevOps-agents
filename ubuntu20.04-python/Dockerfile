@@ -1,4 +1,4 @@
-FROM devopsubuntu20.04:latest
+FROM devops-agent-ubuntu-20.04-base:latest
 
 COPY scripts /scripts
 
