@@ -1,4 +1,4 @@
-FROM devopsubuntu18.04:latest
+FROM devopsubuntu20.04:latest
 
 COPY scripts /scripts
 
