@@ -1,0 +1,11 @@
+name: Build DevOps .NET/Docker Agent Image.
+
+on: workflow_dispatch
+
+jobs:
+  buildAgent:
+    uses: ./.github/workflows/buildAgent.yml
+    with:
+      base: dotnet
+      suffix: dotnet-docker
+      workingDirectory: ./ubuntu20.04-docker
