@@ -34,7 +34,7 @@ set -e
 # releases=$(curl "${release_url}")
 # sdks=$(echo "${releases}" | grep version-sdk | grep -v preview | grep -v rc | grep -v display | cut -d\" -f4 | sort -u | grep '^2')
 
-sdks=(6.0) #(2.1.100 2.1.4 2.1.503 2.1.801 2.2.100 2.2.105 2.2.401)
+sdks=(7.0.100-preview.1) #(2.1.100 2.1.4 2.1.503 2.1.801 2.2.100 2.2.105 2.2.401)
 
 for sdk in $sdks; do
     # Glob matches dotnet-dev-1.x or dotnet-sdk-2.y
