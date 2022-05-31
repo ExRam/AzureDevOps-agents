@@ -3,8 +3,9 @@ FROM devops-agent-ubuntu-20.04-base:latest
 COPY scripts /scripts
 
 ENV AGENT_TOOLSDIRECTORY=/_work/_tool
-ENV PATH=/root/.dotnet:$PATH
-ENV PATH=/root/.dotnet/tools:$PATH
+ENV DOTNET_ROOT=/root/.dotnet
+ENV PATH=$DOTNET_ROOT:$PATH
+ENV PATH=$DOTNET_ROOT/tools:$PATH
 
 RUN /scripts/installers/mspackages.sh && \
     /scripts/installers/dotnetcore-sdk.sh && \
