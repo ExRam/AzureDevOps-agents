@@ -4,6 +4,7 @@ COPY scripts /scripts
 
 ENV AGENT_TOOLSDIRECTORY=/_work/_tool
 ENV PATH=/root/.dotnet:$PATH
+ENV PATH=/root/.dotnet/tools:$PATH
 
 RUN /scripts/installers/mspackages.sh && \
     /scripts/installers/dotnetcore-sdk.sh && \
