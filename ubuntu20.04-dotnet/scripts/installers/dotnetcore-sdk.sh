@@ -9,5 +9,5 @@ wget https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh
 chmod +x ./dotnet-install.sh
 
 ./dotnet-install.sh --version 6.0.300
-./dotnet-install.sh --version 7.0.100-preview.4.22252.9
+./dotnet-install.sh --version 7.0.100-preview.7.22377.5
 
